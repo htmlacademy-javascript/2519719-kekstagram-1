@@ -30,11 +30,11 @@ const extractNumbers = function (str) {
   return parseInt(result, 10);
 };
 
-extractNumbers('2023 год');            // 2023
-extractNumbers('ECMAScript 2022');     // 2022
+extractNumbers('2023 год');// 2023
+extractNumbers('ECMAScript 2022');// 2022
 extractNumbers('1 кефир, 0.5 батона'); // 105
-extractNumbers('агент 007');           // 7
-extractNumbers('а я томат');           // NaN
+extractNumbers('агент 007');// 7
+extractNumbers('а я томат');// NaN
 
 
 const padToLength = function(firstString, number, secondString) {
@@ -48,7 +48,7 @@ const padToLength = function(firstString, number, secondString) {
     return newString;
   }
 };
-
+padToLength();
 
 const checkStringLength = function(str, number) {
   if (str.length <= number) {
@@ -57,4 +57,5 @@ const checkStringLength = function(str, number) {
     return false;
   }
 };
+checkStringLength();
 
