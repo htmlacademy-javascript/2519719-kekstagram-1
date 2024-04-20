@@ -49,8 +49,6 @@ const padToLength = function(firstString, number, secondString) {
   }
 };
 
-console.log(padToLength('qwerty', 14, '0'));
-
 
 const checkStringLength = function(str, number) {
   if (str.length <= number) {
@@ -59,4 +57,4 @@ const checkStringLength = function(str, number) {
     return false;
   }
 };
-console.log(checkStringLength('проверяемая строка', 10));
+
