@@ -1,13 +1,13 @@
 
-const isPalindrome = function (str) {
-  str = str.replaceAll(' ', '');
-  str = str.toLowerCase();
-  let length = str.length / 2;
+const isPalindrome = (str) => {
+  let newString = '';
+  newString = str.replaceAll(' ', '').toLowerCase();
+  let length = newString.length / 2;
   if (length % 2 !== 0) {
     length = Math.floor(length);
   }
   for (let i = 0; i <= length; i = i + 1) {
-    if (str[i] !== str[str.length - i - 1]) {
+    if (newString[i] !== newString[newString.length - i - 1]) {
       return false;
     }
   }
@@ -19,8 +19,8 @@ isPalindrome('Кекс'); // false
 isPalindrome('Лёша на полке клопа нашёл '); // true
 
 
-const extractNumbers = function (str) {
-  let result = "";
+const extractNumbers = (str) => {
+  let result = '';
   for (let i = 0; i <= str.length; i = i + 1) {
     if(!isNaN(parseInt(str[i], 10))) {
       result += str[i];
@@ -37,7 +37,7 @@ extractNumbers('агент 007');// 7
 extractNumbers('а я томат');// NaN
 
 
-const padToLength = function(firstString, number, secondString) {
+const padToLength = (firstString, number, secondString) => {
   if (firstString.length >= number) {
     return firstString;
   } else {
@@ -48,14 +48,8 @@ const padToLength = function(firstString, number, secondString) {
     return newString;
   }
 };
-padToLength();
+padToLength('q', 4, 'we');
 
-const checkStringLength = function(str, number) {
-  if (str.length <= number) {
-    return true;
-  } else {
-    return false;
-  }
-};
-checkStringLength();
+const checkStringLength = (str, number) => str.length <= number;
+checkStringLength('проверяемая строка', 20);
 
