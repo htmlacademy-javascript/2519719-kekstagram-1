@@ -24,8 +24,6 @@ const NAMES = [
   'Володя'
 ];
 const PHOTO_COUNT = 25;
-// const randomMessageIndex = getRandomInteger(0, MESSAGE.length - 1);
-// const randomNameIndex = getRandomInteger(0, NAMES.length - 1);
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 function createRandomIdFromRangeGenerator (min, max) {
@@ -61,5 +59,5 @@ const createphoto = () => ({
   }],
 });
 
-const simularPhoto = Array.from({length: PHOTO_COUNT}, createphoto);
+Array.from({length: PHOTO_COUNT}, createphoto);
 
