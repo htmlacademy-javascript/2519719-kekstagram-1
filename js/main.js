@@ -1,3 +1,4 @@
 import {generatePhotos} from './mocks.js';
-generatePhotos();
-
+import { renderMiniature } from './miniature.js';
+const photos = generatePhotos();
+renderMiniature(photos);
