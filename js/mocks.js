@@ -28,4 +28,4 @@ const createPhoto = () => {
 
 const generatePhotos = () => Array.from({length: PHOTO_COUNT}, createPhoto);
 
-export {generatePhotos, createComment, createPhoto};
+export {generatePhotos};
