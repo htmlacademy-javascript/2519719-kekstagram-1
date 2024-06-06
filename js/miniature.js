@@ -1,22 +1,24 @@
-function miniature (photos) {
-  const template = document.querySelector('#picture').content;
-  const classPicture = template.querySelector('.picture');
-  const pictures = document.querySelector('.pictures');
+const template = document.querySelector('#picture').content.querySelector('.picture');
+const pictures = document.querySelector('.pictures');
+
+const renderMiniature = (photos) => {
   const fragment = document.createDocumentFragment();
 
 
   photos.forEach((photo) => {
-    const copyClassPuctire = classPicture.cloneNode(true);
-    const img = copyClassPuctire.querySelector('.picture__img');
-    const comments = copyClassPuctire.querySelector('.picture__comments');
-    const likes = copyClassPuctire.querySelector('.picture__likes');
+    const puctire = template.cloneNode(true);
+    const img = puctire.querySelector('.picture__img');
+    const comments = puctire.querySelector('.picture__comments');
+    const likes = puctire.querySelector('.picture__likes');
     img.src = photo.url;
+    img.alt = photo.description;
 
     likes.textContent = photo.likes;
     comments.textContent = photo.comments.length;
-    fragment.appendChild(copyClassPuctire);
+    fragment.appendChild(puctire);
 
   });
   pictures.appendChild(fragment);
-}
-export {miniature};
+};
+
+export {renderMiniature};
