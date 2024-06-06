@@ -1,3 +1,9 @@
 import {generatePhotos} from './mocks.js';
-generatePhotos();
+import { renderMiniature } from './miniature.js';
+import {fullsize} from './fullsize.js';
+import { addEventListeners } from './fullsize.js';
+const photos = generatePhotos();
+renderMiniature(photos);
+addEventListeners(photos);
+// const photo = createPhoto();
 
