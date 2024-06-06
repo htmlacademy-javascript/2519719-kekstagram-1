@@ -3,8 +3,6 @@ const pictures = document.querySelector('.pictures');
 
 const renderMiniature = (photos) => {
   const fragment = document.createDocumentFragment();
-
-
   photos.forEach((photo) => {
     const puctire = template.cloneNode(true);
     const img = puctire.querySelector('.picture__img');
