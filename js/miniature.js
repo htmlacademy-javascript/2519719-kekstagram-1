@@ -17,5 +17,6 @@ const renderMiniature = (photos) => {
 
   });
   pictures.appendChild(fragment);
-}
+};
+
 export {renderMiniature};
