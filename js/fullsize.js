@@ -1,7 +1,7 @@
 const bigPucrure = document.querySelector('.big-picture');
 const buttoncancel = document.querySelector('.big-picture__cancel');
 
-function fullsize (photo) {
+function openFullsize (photo) {
 
   const srcBigPicture = document.querySelector('.big-picture__img img');
   const likes = document.querySelector('.likes-count');
@@ -46,7 +46,7 @@ function addEventListeners(photos) {
   pictureImgs.forEach((pictureEl, index) => {
     pictureEl.addEventListener('click', (evt) => {
       evt.preventDefault();
-      fullsize(photos[index]);
+      openFullsize(photos[index]);
     });
   });
 }
@@ -74,6 +74,6 @@ const removeEventListeners = () => {
   document.removeEventListener('keydown', keydownListener);
   buttoncancel.removeEventListener('click', closeModal);
 };
-export {fullsize, addEventListeners};
+export {openFullsize, addEventListeners};
 
 

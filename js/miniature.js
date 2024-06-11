@@ -10,7 +10,6 @@ const renderMiniature = (photos) => {
     const likes = puctire.querySelector('.picture__likes');
     img.src = photo.url;
     img.alt = photo.description;
-
     likes.textContent = photo.likes;
     comments.textContent = photo.comments.length;
     fragment.appendChild(puctire);
