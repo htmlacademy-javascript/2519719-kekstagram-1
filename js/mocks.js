@@ -16,7 +16,6 @@ const createComment = () => ({
 const createPhoto = () => {
   const id = generatePhotoId();
   const comments = Array.from({length: getRandomInteger(MIN_COMMENT_VALUE, MAX_COMMENT_VALUE)}, createComment);
-  console.log(id);
   return {
     id: id,
     url: `photos/${id}.jpg`,
