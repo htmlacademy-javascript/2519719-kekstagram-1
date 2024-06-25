@@ -1,44 +1,48 @@
 import {
-  bigPicture, buttonCancel, srcBigPicture, likes, comments, description, listComments, socialComment, pictures
+  bigPicture, bigPictureButtonCancel, bigPictureImg, bigPictureLikes, bigPictureComments, bigPictureDescription, bigPictureListComments, bigPictureSocialComment, miniaturePictures
 } from './elements.js';
 
-const openFullsizePhoto = (photo) => {
-  bigPicture.classList.remove('hidden');
-  srcBigPicture.src = photo.url;
-  srcBigPicture.alt = photo.description;
-  likes.textContent = photo.likes;
-  comments.textContent = photo.comments.length;
-  description.textContent = photo.description;
-
-  listComments.innerHTML = '';
-
-
+const renderComment = (photo) => {
+  const fragment = document.createDocumentFragment();
   photo.comments.forEach((comment) => {
-    const copycomment = socialComment.cloneNode(true);
+    const copycomment = bigPictureSocialComment.cloneNode(true);
     copycomment.querySelector('.social__text').textContent = '';
     copycomment.querySelector('.social__text').textContent = comment.message;
     copycomment.querySelector('.social__picture').src = comment.avatar;
     copycomment.querySelector('.social__picture').alt = comment.name;
-    listComments.appendChild(copycomment);
+    fragment.appendChild(copycomment);
   });
+  bigPictureListComments.appendChild(fragment);
+};
+
+const openFullsizePhoto = (photo) => {
+  bigPicture.classList.remove('hidden');
+  bigPictureImg.src = photo.url;
+  bigPictureImg.alt = photo.description;
+  bigPictureLikes.textContent = photo.likes;
+  bigPictureComments.textContent = photo.comments.length;
+  bigPictureDescription.textContent = photo.description;
+
+  bigPictureListComments.innerHTML = '';
+
+  renderComment(photo);
 
   document.querySelector('.social__comment-count').classList.add('hidden');
   document.querySelector('.comments-loader').classList.add('hidden');
   document.querySelector('body').classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
-  buttonCancel.addEventListener('click', onButtonCancelClick);
+  bigPictureButtonCancel.addEventListener('click', onbigPictureButtonCancelClick);
 
 };
 
-const addEventListener = (photos) => {
-  // const pictures = document.querySelector('.pictures');
+const addPicturesEventListener = (photos) => {
 
-  pictures.addEventListener('click', (evt) => {
+  miniaturePictures.addEventListener('click', (evt) => {
 
     evt.preventDefault();
     const picture = evt.target.closest('.picture');
-    const pictureId = picture.getAttribute('id');
+    const pictureId = picture.id;
 
     if (picture) {
       const foundPhoto = photos.find((photo) => photo.id === Number(pictureId));
@@ -50,7 +54,7 @@ const addEventListener = (photos) => {
 
 const removeEventListeners = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
-  buttonCancel.removeEventListener('click', onButtonCancelClick);
+  bigPictureButtonCancel.removeEventListener('click', onbigPictureButtonCancelClick);
 };
 
 const closeFullsizePhoto = () => {
@@ -60,7 +64,7 @@ const closeFullsizePhoto = () => {
 };
 
 
-function onButtonCancelClick(evt) {
+function onbigPictureButtonCancelClick(evt) {
   evt.preventDefault();
   closeFullsizePhoto();
 }
@@ -71,6 +75,6 @@ function onDocumentKeydown(evt) {
   }
 }
 
-export { openFullsizePhoto, addEventListener };
+export { openFullsizePhoto, addPicturesEventListener };
 
 
