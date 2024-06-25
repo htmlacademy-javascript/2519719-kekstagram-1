@@ -1,5 +1,4 @@
-const template = document.querySelector('#picture').content.querySelector('.picture');
-const pictures = document.querySelector('.pictures');
+import { pictures, template } from './elements.js';
 
 const renderMiniature = (photos) => {
   const fragment = document.createDocumentFragment();
@@ -8,6 +7,7 @@ const renderMiniature = (photos) => {
     const img = puctire.querySelector('.picture__img');
     const comments = puctire.querySelector('.picture__comments');
     const likes = puctire.querySelector('.picture__likes');
+    puctire.setAttribute('id', photo.id);
     img.src = photo.url;
     img.alt = photo.description;
     likes.textContent = photo.likes;
@@ -18,4 +18,5 @@ const renderMiniature = (photos) => {
   pictures.appendChild(fragment);
 };
 
-export {renderMiniature};
+
+export { renderMiniature };

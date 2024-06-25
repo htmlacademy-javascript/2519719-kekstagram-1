@@ -1,7 +1,7 @@
-import {generatePhotos} from './mocks.js';
+import { generatePhotos } from './mocks.js';
 import { renderMiniature } from './miniature.js';
-import { addEventListeners } from './fullsize.js';
+import { addEventListener } from './fullsize.js';
+
 const photos = generatePhotos();
 renderMiniature(photos);
-addEventListeners(photos);
-
+addEventListener(photos);
