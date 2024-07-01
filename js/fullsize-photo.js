@@ -13,47 +13,45 @@ import {
 
 
 let startIndex = 0;
-let photo;
+let photoComments;
+const COMMENTSPERPAGE = 5;
 
-const renderComment = () => {
+const bigPictureComments = bigPicture.querySelector('.comments-count');
+
+const renderComment = (comment, index, startIndex, endIndex, fragment) => {
+  let newCount = bigPictureCountComment.querySelector('.first-comments-count');
+  newCount.textContent = endIndex;
+  if (index >= startIndex && index < endIndex) {
+    const newComment = bigPictureSocialComment.cloneNode(true);
+    newComment.querySelector('.social__text').textContent = comment.message;
+    newComment.querySelector('.social__picture').src = comment.avatar;
+    newComment.querySelector('.social__picture').alt = comment.name;
+    fragment.appendChild(newComment);
+  }
+}
+
+const renderComments = () => {
   bigPictureShowMoreComments.classList.remove('hidden');
-  const commentsPerPage = 5;
-  let endIndex = startIndex + commentsPerPage;
 
+  let endIndex = startIndex + COMMENTSPERPAGE;
   const fragment = document.createDocumentFragment();
 
-  if (endIndex >= photo.comments.length) {
-    endIndex = photo.comments.length;
+  if (endIndex >= photoComments.length) {
+    endIndex = photoComments.length;
   }
 
-  photo.comments.forEach((comment, index) => {
-    const newCount = bigPictureCountComment.innerHTML.split(' ');
-    newCount[0] = endIndex;
-    const newCountString = newCount.join(' ');
-    bigPictureCountComment.innerHTML = newCountString;
-    if (index >= startIndex && index < endIndex) {
-      const copycomment = bigPictureSocialComment.cloneNode(true);
-      copycomment.querySelector('.social__text').textContent = '';
-      copycomment.querySelector('.social__text').textContent = comment.message;
-      copycomment.querySelector('.social__picture').src = comment.avatar;
-      copycomment.querySelector('.social__picture').alt = comment.name;
-      fragment.appendChild(copycomment);
-    }
-  });
+  photoComments.forEach((comment, index) => renderComment(comment, index, startIndex, endIndex, fragment));
 
   bigPictureListComments.appendChild(fragment);
-  startIndex += commentsPerPage;
+  startIndex += COMMENTSPERPAGE;
 
-  if (endIndex >= photo.comments.length) {
+  if (endIndex >= photoComments.length) {
     bigPictureShowMoreComments.classList.add('hidden');
   }
 
-  document.querySelector('body').classList.add('modal-open');
 };
 
-const openFullsizePhoto = () => {
-  const bigPictureComments = bigPicture.querySelector('.comments-count');
-
+const openFullsizePhoto = (photo) => {
   bigPictureListComments.innerHTML = '';
   bigPicture.classList.remove('hidden');
   bigPictureImg.src = photo.url;
@@ -64,8 +62,8 @@ const openFullsizePhoto = () => {
   bigPictureDescription.textContent = photo.description;
 
 
-  bigPictureShowMoreComments.addEventListener('click', renderComment);
-  renderComment();
+  bigPictureShowMoreComments.addEventListener('click', renderComments);
+  renderComments();
 
 
   document.querySelector('body').classList.add('modal-open');
@@ -83,7 +81,7 @@ const addPicturesEventListener = (photos) => {
 
     if (picture) {
       const foundPhoto = photos.find((photoItem) => photoItem.id === Number(pictureId));
-      photo = foundPhoto;
+      photoComments = foundPhoto.comments;
       openFullsizePhoto(foundPhoto);
     }
   });
@@ -93,7 +91,6 @@ const addPicturesEventListener = (photos) => {
 const removeEventListeners = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   bigPictureButtonCancel.removeEventListener('click', onbigPictureButtonCancelClick);
-  bigPictureShowMoreComments.removeEventListener('click', renderComment);
 };
 
 const closeFullsizePhoto = () => {
@@ -114,6 +111,7 @@ function onDocumentKeydown(evt) {
     closeFullsizePhoto();
   }
 }
+
 
 export { openFullsizePhoto, addPicturesEventListener };
 
