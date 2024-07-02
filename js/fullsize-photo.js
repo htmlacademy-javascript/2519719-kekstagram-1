@@ -18,8 +18,8 @@ const COMMENTSPERPAGE = 5;
 
 const bigPictureComments = bigPicture.querySelector('.comments-count');
 
-const renderComment = (comment, index, startIndex, endIndex, fragment) => {
-  let newCount = bigPictureCountComment.querySelector('.first-comments-count');
+const renderComment = (comment, index, endIndex, fragment) => {
+  const newCount = bigPictureCountComment.querySelector('.first-comments-count');
   newCount.textContent = endIndex;
   if (index >= startIndex && index < endIndex) {
     const newComment = bigPictureSocialComment.cloneNode(true);
@@ -28,7 +28,7 @@ const renderComment = (comment, index, startIndex, endIndex, fragment) => {
     newComment.querySelector('.social__picture').alt = comment.name;
     fragment.appendChild(newComment);
   }
-}
+};
 
 const renderComments = () => {
   bigPictureShowMoreComments.classList.remove('hidden');
@@ -40,7 +40,7 @@ const renderComments = () => {
     endIndex = photoComments.length;
   }
 
-  photoComments.forEach((comment, index) => renderComment(comment, index, startIndex, endIndex, fragment));
+  photoComments.forEach((comment, index) => renderComment(comment, index, endIndex, fragment));
 
   bigPictureListComments.appendChild(fragment);
   startIndex += COMMENTSPERPAGE;
