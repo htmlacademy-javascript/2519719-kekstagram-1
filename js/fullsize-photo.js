@@ -8,48 +8,49 @@ import {
   bigPictureSocialComment,
   miniaturePictures,
   bigPictureShowMoreComments,
-  bigPictureCountComment
+  bigPictureComments,
+  shownCommentCount
 } from './elements.js';
 
 
+const COMMENTS_PER_PAGE = 5;
+
 let startIndex = 0;
 let photoComments;
-const COMMENTSPERPAGE = 5;
 
-const bigPictureComments = bigPicture.querySelector('.comments-count');
-
-const renderComment = (comment, index, endIndex, fragment) => {
-  const newCount = bigPictureCountComment.querySelector('.first-comments-count');
-  newCount.textContent = endIndex;
-  if (index >= startIndex && index < endIndex) {
-    const newComment = bigPictureSocialComment.cloneNode(true);
-    newComment.querySelector('.social__text').textContent = comment.message;
-    newComment.querySelector('.social__picture').src = comment.avatar;
-    newComment.querySelector('.social__picture').alt = comment.name;
-    fragment.appendChild(newComment);
-  }
+const getComment = (comment) => {
+  const newComment = bigPictureSocialComment.cloneNode(true);
+  newComment.querySelector('.social__text').textContent = comment.message;
+  newComment.querySelector('.social__picture').src = comment.avatar;
+  newComment.querySelector('.social__picture').alt = comment.name;
+  return newComment;
 };
 
 const renderComments = () => {
   bigPictureShowMoreComments.classList.remove('hidden');
 
-  let endIndex = startIndex + COMMENTSPERPAGE;
+  let endIndex = startIndex + COMMENTS_PER_PAGE;
+
   const fragment = document.createDocumentFragment();
+
 
   if (endIndex >= photoComments.length) {
     endIndex = photoComments.length;
   }
 
-  photoComments.forEach((comment, index) => renderComment(comment, index, endIndex, fragment));
-
-  bigPictureListComments.appendChild(fragment);
-  startIndex += COMMENTSPERPAGE;
+  for (let i = startIndex; i < endIndex; i++) {
+    fragment.appendChild(getComment(photoComments[i]));
+    shownCommentCount.textContent = endIndex;
+  }
+  startIndex += COMMENTS_PER_PAGE;
 
   if (endIndex >= photoComments.length) {
     bigPictureShowMoreComments.classList.add('hidden');
   }
+  bigPictureListComments.appendChild(fragment);
 
 };
+
 
 const openFullsizePhoto = (photo) => {
   bigPictureListComments.innerHTML = '';
@@ -61,16 +62,12 @@ const openFullsizePhoto = (photo) => {
   bigPictureComments.textContent = photo.comments.length;
   bigPictureDescription.textContent = photo.description;
 
-
-  bigPictureShowMoreComments.addEventListener('click', renderComments);
   renderComments();
-
 
   document.querySelector('body').classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
-  bigPictureButtonCancel.addEventListener('click', onbigPictureButtonCancelClick);
-
+  bigPictureButtonCancel.addEventListener('click', onBigPictureButtonCancelClick);
 };
 
 const addPicturesEventListener = (photos) => {
@@ -87,10 +84,15 @@ const addPicturesEventListener = (photos) => {
   });
 };
 
+const onBigPictureShowMoreCommentsClick = () => {
+  renderComments();
+};
+
+bigPictureShowMoreComments.addEventListener('click', onBigPictureShowMoreCommentsClick);
 
 const removeEventListeners = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
-  bigPictureButtonCancel.removeEventListener('click', onbigPictureButtonCancelClick);
+  bigPictureButtonCancel.removeEventListener('click', onBigPictureButtonCancelClick);
 };
 
 const closeFullsizePhoto = () => {
@@ -101,7 +103,7 @@ const closeFullsizePhoto = () => {
 };
 
 
-function onbigPictureButtonCancelClick(evt) {
+function onBigPictureButtonCancelClick(evt) {
   evt.preventDefault();
   closeFullsizePhoto();
 }
