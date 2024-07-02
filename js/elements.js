@@ -8,7 +8,12 @@ const bigPictureListComments = bigPicture.querySelector('.social__comments');
 const bigPictureSocialComment = bigPicture.querySelector('.social__comment');
 const miniatureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const miniaturePictures = document.querySelector('.pictures');
+const bigPictureShowMoreComments = document.querySelector('.comments-loader');
+const bigPictureCountComment = document.querySelector('.social__comment-count');
+const shownCommentCount = bigPictureCountComment.querySelector('.shown-comments-count');
+
+
 export {
   bigPicture, bigPictureButtonCancel, bigPictureImg, bigPictureLikes, bigPictureComments, bigPictureDescription, bigPictureListComments,
-  bigPictureSocialComment, miniatureTemplate, miniaturePictures
+  bigPictureSocialComment, miniatureTemplate, miniaturePictures, bigPictureShowMoreComments, bigPictureCountComment, shownCommentCount
 };
