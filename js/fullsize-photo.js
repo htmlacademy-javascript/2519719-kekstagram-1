@@ -72,7 +72,6 @@ const openFullsizePhoto = (photo) => {
 
 const addPicturesEventListener = (photos) => {
   miniaturePictures.addEventListener('click', (evt) => {
-    evt.preventDefault();
     const picture = evt.target.closest('.picture');
 
     if (picture) {
