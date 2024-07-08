@@ -49,8 +49,8 @@
                   <!-- Изменение размера изображения -->
                   <fieldset class="img-upload__scale  scale">
                     <button type="button" class="scale__control  scale__control--smaller">Уменьшить</button>
-                    <input type="text" class="scale__control  scale__control--value" value="55%" title="Image Scale"
-                      name="scale" min="25%" max="100%" step="25%" required>
+                    <input type="text" class="scale__control  scale__control--value" value="100%" title="Image Scale"
+                      name="scale" readonly>
                     <button type="button" class="scale__control  scale__control--bigger">Увеличить</button>
                   </fieldset>
 
@@ -61,7 +61,7 @@
 
                   <!-- Изменение глубины эффекта, накладываемого на изображение -->
                   <fieldset class="img-upload__effect-level  effect-level">
-                    <input class="effect-level__value" type="range" step="any" name="effect-level" value="" required>
+                    <input class="effect-level__value" type="number" step="any" name="effect-level" value="">
                     <div class="effect-level__slider"></div>
                   </fieldset>
 
@@ -74,7 +74,7 @@
                   <ul class="effects__list">
                     <li class="effects__item">
                       <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-none"
-                        value="none" checked required>
+                        value="none" checked>
                       <label for="effect-none" class="effects__label">
                         <span class="effects__preview  effects__preview--none">Превью фото без эффекта</span>
                         Оригинал
@@ -82,7 +82,7 @@
                     </li>
                     <li class="effects__item">
                       <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-chrome"
-                        value="chrome" step="0.1">
+                        value="chrome">
                       <label for="effect-chrome" class="effects__label">
                         <span class="effects__preview  effects__preview--chrome">Превью эффекта Хром</span>
                         Хром
@@ -90,7 +90,7 @@
                     </li>
                     <li class="effects__item">
                       <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-sepia"
-                        value="sepia" step="0.1">
+                        value="sepia">
                       <label for="effect-sepia" class="effects__label">
                         <span class="effects__preview  effects__preview--sepia">Превью эффекта Сепия</span>
                         Сепия
@@ -98,7 +98,7 @@
                     </li>
                     <li class="effects__item">
                       <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-marvin"
-                        value="marvin" step="1%">
+                        value="marvin">
                       <label for="effect-marvin" class="effects__label">
                         <span class="effects__preview  effects__preview--marvin">Превью эффекта Марвин</span>
                         Марвин
@@ -106,7 +106,7 @@
                     </li>
                     <li class="effects__item">
                       <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-phobos"
-                        value="phobos" step="0.1px">
+                        value="phobos">
                       <label for="effect-phobos" class="effects__label">
                         <span class="effects__preview  effects__preview--phobos">Превью эффекта Фобос</span>
                         Фобос
@@ -114,7 +114,7 @@
                     </li>
                     <li class="effects__item">
                       <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-heat"
-                        value="heat" step=" 0.1">
+                        value="heat">
                       <label for="effect-heat" class="effects__label">
                         <span class="effects__preview  effects__preview--heat">Превью эффекта Зной</span>
                         Зной
@@ -126,10 +126,11 @@
                 <!-- Добавление хэш-тегов и комментария к изображению -->
                 <fieldset class="img-upload__text text">
                   <div class="img-upload__field-wrapper">
-                    <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег" minlength="1" maxlength="20">
+                    <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег">
                   </div>
                   <div class="img-upload__field-wrapper">
-                    <textarea class="text__description" name="description" placeholder="Ваш комментарий..."></textarea>
+                    <textarea class="text__description" name="description" placeholder="Ваш комментарий..."
+                      maxlength="140"></textarea>
                   </div>
                 </fieldset>
 
@@ -249,9 +250,8 @@
     <div class="img-upload__message  img-upload__message--loading">Загружаем...</div>
   </template>
 
-  <script src="js/main.js" type="module"></script>
   <script src="vendor/pristine/pristine.min.js" type="text/javascript"></script>
-  <script src="js/form-modul.js" type="module"></script>
+  <script src="js/main.js" type="module"></script>
 </body>
 
 </html>

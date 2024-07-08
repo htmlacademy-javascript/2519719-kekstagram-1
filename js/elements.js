@@ -19,10 +19,11 @@ const effectLevelValue = document.querySelector('.effect-level__value');
 const effectsRadio = document.querySelector('.effects__radio');
 const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
-
+const form = document.querySelector('.img-upload__form');
+const uploadInput = document.querySelector('#upload-file');
 
 export {
   bigPicture, bigPictureButtonCancel, bigPictureImg, bigPictureLikes, bigPictureComments, bigPictureDescription, bigPictureListComments,
   bigPictureSocialComment, miniatureTemplate, miniaturePictures, bigPictureShowMoreComments, bigPictureCountComment, shownCommentCount,
-  uploadOverlay, formCancelButton, scaleControl, uploadFile, effectLevelValue, effectsRadio, textDescription, textHashtags
+  uploadOverlay, formCancelButton, scaleControl, uploadFile, effectLevelValue, effectsRadio, textDescription, textHashtags, form, uploadInput
 };

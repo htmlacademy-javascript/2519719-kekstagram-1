@@ -1,8 +1,8 @@
 import {
-  uploadOverlay, formCancelButton, scaleControl, uploadFile, effectLevelValue, effectsRadio, textDescription, textHashtags
+  uploadOverlay, formCancelButton, textDescription, textHashtags, form,
+  uploadInput
 } from './elements.js';
 
-const form = document.querySelector('.img-upload__form');
 
 const openForm = () => {
   uploadOverlay.classList.remove('hidden');
@@ -11,11 +11,11 @@ const openForm = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const uploadInput = document.getElementById('upload-file');
-uploadInput.addEventListener('change', openForm);
+uploadInput.addEventListener('change', () => {
+  openForm();
+});
 
 const removeEventListeners = () => {
-  uploadInput.removeEventListener('change', openForm);
   formCancelButton.removeEventListener('click', onButtonCancelClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 };
@@ -23,17 +23,11 @@ const removeEventListeners = () => {
 const cancelForm = () => {
   uploadOverlay.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
-  scaleControl.value = '55%';
-  uploadFile.value = '';
-  effectLevelValue.value = '';
-  effectsRadio.value = 'none';
-  textHashtags.value = '';
-  textDescription.value = '';
+  form.reset();
   removeEventListeners();
 };
 
-function onButtonCancelClick(evt) {
-  evt.preventDefault();
+function onButtonCancelClick() {
   cancelForm();
 }
 
@@ -44,51 +38,68 @@ function onDocumentKeydown(evt) {
     }
   }
 }
-openForm();
-
 
 const pristine = new Pristine(form);
 
 
 form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
   const isValid = pristine.validate();
-  if (isValid) {
-    evt.target.submit();
+  if (!isValid) {
+    evt.preventDefault();
   }
 });
 
-
-function validateHashtag(value) {
+const validateHashtagCount = (value) => {
   const hashtags = value.split(' ');
-  const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
+  return hashtags.length < 5;
+};
+
+const validateHashtagUnique = (value) => {
+  const hashtags = value.split(' ');
   const seen = {};
 
-  if (hashtags.length > 5) {
-    return false;
-  }
   for (let i = 0; i < hashtags.length; i++) {
-    if (!regexp.test(hashtags[i])) {
-      return false;
-    }
-
-    const normalizedTag = hashtags[i].toLowerCase();
+    const normalizedTag = hashtags[i].toLowerCase().trim();
 
     if (seen[normalizedTag]) {
       return false;
     }
-
     seen[normalizedTag] = true;
   }
-
-
   return true;
-}
+};
 
+const validateHashtagLength = (value) => {
+  if (value === '') {
+    return true;
+  }
+  const hashtags = value.split(' ');
+  for (let i = 0; i < hashtags.length; i++) {
+    const isValid = hashtags[i].length <= 20 && hashtags[i].length > 1;
+    if (!isValid) {
+      return false;
+    }
+  }
+  return true;
+};
 
-function validateTextDescription(value) {
-  return value.length < 140;
-}
+const validateHashtagSymbol = (value) => {
+  if (value === '') {
+    return true;
+  }
 
-pristine.addValidator('[name="hashtags"]', validateHashtag);
-pristine.addValidator('[name="description"]', validateTextDescription);
+  const hashtags = value.split(' ');
+  const regexp = /^#[a-zа-яё0-9]+$/i;
+
+  for (let i = 0; i < hashtags.length; i++) {
+    const isValid = regexp.test(hashtags[i]);
+    if (!isValid) {
+      return false;
+    }
+  }
+};
+
+pristine.addValidator(textHashtags, validateHashtagCount, 'Максимальное число хештегов - 5');
+pristine.addValidator(textHashtags, validateHashtagLength, 'Максимальная длина одного хэш-тега 20 символов, включая решётку');
+pristine.addValidator(textHashtags, validateHashtagUnique, 'Один и тот же хэш-тег не может быть использован дважды');
+pristine.addValidator(textHashtags, validateHashtagSymbol, 'строка после решётки должна состоять из букв и чисел');
