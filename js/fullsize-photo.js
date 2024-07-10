@@ -72,11 +72,10 @@ const openFullsizePhoto = (photo) => {
 
 const addPicturesEventListener = (photos) => {
   miniaturePictures.addEventListener('click', (evt) => {
-    evt.preventDefault();
     const picture = evt.target.closest('.picture');
-    const pictureId = picture.id;
 
     if (picture) {
+      const pictureId = picture.id;
       const foundPhoto = photos.find((photoItem) => photoItem.id === Number(pictureId));
       photoComments = foundPhoto.comments;
       openFullsizePhoto(foundPhoto);
