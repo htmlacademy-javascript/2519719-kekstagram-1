@@ -3,6 +3,8 @@ import {
   uploadInput
 } from './elements.js';
 
+const HASHTAGS_COUNT = 5;
+const HASHTAG_LENGTH = 20;
 
 const openForm = () => {
   uploadOverlay.classList.remove('hidden');
@@ -39,7 +41,10 @@ function onDocumentKeydown(evt) {
   }
 }
 
-const pristine = new Pristine(form);
+const pristine = new Pristine(form, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper'
+});
 
 
 form.addEventListener('submit', (evt) => {
@@ -49,54 +54,37 @@ form.addEventListener('submit', (evt) => {
   }
 });
 
+
+const convertToHashtag = (value) => {
+  const trimmedValue = value.trim().toLowerCase();
+  const hashtags = trimmedValue.split(' ');
+  return hashtags.filter((hashtag) => hashtag !== '');
+};
+
+
 const validateHashtagCount = (value) => {
-  const hashtags = value.split(' ');
-  return hashtags.length < 5;
+  const hashtags = convertToHashtag(value);
+  return hashtags.length < HASHTAGS_COUNT;
 };
 
 const validateHashtagUnique = (value) => {
-  const hashtags = value.split(' ');
-  const seen = {};
-
-  for (let i = 0; i < hashtags.length; i++) {
-    const normalizedTag = hashtags[i].toLowerCase().trim();
-
-    if (seen[normalizedTag]) {
-      return false;
-    }
-    seen[normalizedTag] = true;
-  }
-  return true;
+  const hashtags = convertToHashtag(value);
+  const seen = new Set(hashtags);
+  return hashtags.length === seen.size;
 };
 
 const validateHashtagLength = (value) => {
-  if (value === '') {
-    return true;
-  }
-  const hashtags = value.split(' ');
-  for (let i = 0; i < hashtags.length; i++) {
-    const isValid = hashtags[i].length <= 20 && hashtags[i].length > 1;
-    if (!isValid) {
-      return false;
-    }
-  }
-  return true;
+
+  const hashtags = convertToHashtag(value);
+  return hashtags.every((tag) => tag.length <= HASHTAG_LENGTH);
 };
 
-const validateHashtagSymbol = (value) => {
-  if (value === '') {
-    return true;
-  }
 
-  const hashtags = value.split(' ');
+const validateHashtagSymbol = (value) => {
+  const hashtags = convertToHashtag(value);
   const regexp = /^#[a-zа-яё0-9]+$/i;
 
-  for (let i = 0; i < hashtags.length; i++) {
-    const isValid = regexp.test(hashtags[i]);
-    if (!isValid) {
-      return false;
-    }
-  }
+  return hashtags.every((tag) => regexp.test(tag));
 };
 
 pristine.addValidator(textHashtags, validateHashtagCount, 'Максимальное число хештегов - 5');
