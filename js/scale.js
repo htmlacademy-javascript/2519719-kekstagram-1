@@ -1,11 +1,8 @@
 import {
-  preview, scaleControl
+  preview, scaleControl, buttonControlBigger, buttonControlSmaller
 } from './elements.js';
 
-const buttonControlSmaller = document.querySelector('.scale__control--smaller');
-const buttonControlBigger = document.querySelector('.scale__control--bigger');
-
-const scale = {
+const Scale = {
   STEP: 25,
   MIN: 25,
   MAX: 100,
@@ -19,22 +16,20 @@ const setScale = (value) => {
 };
 
 buttonControlSmaller.addEventListener('click', () => {
-  let value = scaleControl.value;
-  value = parseInt(value, 10);
-  if (value >= scale.MIN) {
-    value = `${value - scale.STEP}`;
+  let value = parseInt(scaleControl.value, 10);
+  if (value > Scale.MIN) {
+    value = `${value - Scale.STEP}`;
     setScale(value);
   }
 });
 
 
 buttonControlBigger.addEventListener('click', () => {
-  let value = scaleControl.value;
-  value = parseInt(value, 10);
-  if (value < scale.MAX) {
-    value = `${value + scale.STEP}`;
-  } else {
-    value = scale.DEFAULT;
+  let value = parseInt(scaleControl.value, 10);
+  if (value < Scale.MAX) {
+    value = `${value + Scale.STEP}`;
+    setScale(value);
   }
-  setScale(value);
 });
+
+export { Scale };

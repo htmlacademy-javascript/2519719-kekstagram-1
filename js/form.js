@@ -1,15 +1,20 @@
 import {
-  uploadOverlay, formCancelButton, textDescription, textHashtags, form, uploadInput
+  uploadOverlay, formCancelButton, textDescription, textHashtags, form, uploadInput, preview, effectLevel,
+  sliderElement
 } from './elements.js';
+
+import { Scale } from './scale.js';
 
 const HASHTAGS_COUNT = 5;
 const HASHTAG_LENGTH = 20;
 
 const openForm = () => {
   uploadOverlay.classList.remove('hidden');
+  effectLevel.classList.add('hidden');
   document.querySelector('body').classList.add('modal-open');
   formCancelButton.addEventListener('click', onButtonCancelClick);
   document.addEventListener('keydown', onDocumentKeydown);
+  sliderElement.noUiSlider.reset();
 };
 
 uploadInput.addEventListener('change', () => {
@@ -31,6 +36,8 @@ const cancelForm = () => {
   document.querySelector('body').classList.remove('modal-open');
   form.reset();
   pristine.reset();
+  preview.style.filter = 'none';
+  preview.style.transform = `scale(${Scale.DEFAULT / 100})`;
   removeEventListeners();
 };
 
