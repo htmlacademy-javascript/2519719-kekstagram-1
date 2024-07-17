@@ -28,10 +28,11 @@ const valueElement = document.querySelector('.effect-level__value');
 const radioButtons = document.querySelectorAll('.effects__radio');
 const buttonControlSmaller = document.querySelector('.scale__control--smaller');
 const buttonControlBigger = document.querySelector('.scale__control--bigger');
+const body = document.querySelector('body');
 
 export {
   bigPicture, bigPictureButtonCancel, bigPictureImg, bigPictureLikes, bigPictureComments, bigPictureDescription, bigPictureListComments,
   bigPictureSocialComment, miniatureTemplate, miniaturePictures, bigPictureShowMoreComments, bigPictureCountComment, shownCommentCount,
   uploadOverlay, formCancelButton, scaleControl, uploadFile, effectLevelValue, effectsRadio, textDescription, textHashtags, form, uploadInput, preview,
-  effectLevel, sliderElement, valueElement, radioButtons, buttonControlSmaller, buttonControlBigger
+  effectLevel, sliderElement, valueElement, radioButtons, buttonControlSmaller, buttonControlBigger, body
 };

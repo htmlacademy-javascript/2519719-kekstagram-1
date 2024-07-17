@@ -3,6 +3,8 @@ import {
   sliderElement
 } from './elements.js';
 
+import { sendData, showSuccessMessage } from './server-data.js';
+
 import { Scale } from './scale.js';
 
 const HASHTAGS_COUNT = 5;
@@ -53,11 +55,15 @@ function onDocumentKeydown(evt) {
   }
 }
 
-
-form.addEventListener('submit', (evt) => {
+form.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
   const isValid = pristine.validate();
   if (!isValid) {
-    evt.preventDefault();
+  } else {
+    await sendData();
+    cancelForm();
+    console.log(123);
+    showSuccessMessage();
   }
 });
 
