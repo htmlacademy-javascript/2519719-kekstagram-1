@@ -16,12 +16,12 @@ const setScale = (value) => {
 };
 
 buttonControlSmaller.addEventListener('click', () => {
-  let value = parseInt(scaleControl.value, 10);
+  const value = parseInt(scaleControl.value, 10);
   if (value > Scale.MIN) {
-    value = `${value - Scale.STEP}`;
-    setScale(value);
+    setScale(value - Scale.STEP);
   }
-});
+}
+);
 
 
 buttonControlBigger.addEventListener('click', () => {
@@ -32,4 +32,8 @@ buttonControlBigger.addEventListener('click', () => {
   }
 });
 
-export { Scale };
+const resetScale = () => {
+  setScale(Scale.DEFAULT);
+};
+
+export { resetScale };

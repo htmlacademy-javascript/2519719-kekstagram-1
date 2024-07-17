@@ -5,7 +5,7 @@ import {
 
 import { sendData, showSuccessMessage } from './server-data.js';
 
-import { Scale } from './scale.js';
+import { resetScale } from './scale.js';
 
 const HASHTAGS_COUNT = 5;
 const HASHTAG_LENGTH = 20;
@@ -39,7 +39,7 @@ const cancelForm = () => {
   form.reset();
   pristine.reset();
   preview.style.filter = 'none';
-  preview.style.transform = `scale(${Scale.DEFAULT / 100})`;
+  resetScale();
   removeEventListeners();
 };
 
@@ -58,11 +58,9 @@ function onDocumentKeydown(evt) {
 form.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
-  if (!isValid) {
-  } else {
+  if (isValid) {
     await sendData();
     cancelForm();
-    console.log(123);
     showSuccessMessage();
   }
 });

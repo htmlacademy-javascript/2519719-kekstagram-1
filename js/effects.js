@@ -90,16 +90,15 @@ noUiSlider.create(sliderElement, {
 
 
 function setInitialSliderState(value) {
-  const sliderCofigValue = EFFECT_CONFIG[value];
+  const config = EFFECT_CONFIG[value];
   sliderElement.noUiSlider.updateOptions({
     range: {
-      min: sliderCofigValue.range.min,
-      max: sliderCofigValue.range.max
+      min: config.range.min,
+      max: config.range.max
     },
-    start: sliderCofigValue.start,
-    step: sliderCofigValue.step,
+    start: config.start,
+    step: config.step,
   });
-  sliderElement.noUiSlider.set(sliderCofigValue.range.max);
 }
 
 const applyFilter = () => {
