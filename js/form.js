@@ -1,11 +1,21 @@
 import {
-  uploadOverlay, formCancelButton, textDescription, textHashtags, form, uploadInput, preview, effectLevel,
-  sliderElement
+  uploadOverlay,
+  formCancelButton,
+  textDescription,
+  textHashtags,
+  form,
+  uploadInput,
+  preview,
+  effectLevel,
+  sliderElement,
+  body
 } from './elements.js';
+import { isEscapeKey } from './util.js';
 
-import { sendData, showSuccessMessage } from './server-data.js';
+import { sendData } from './server-data.js';
 
 import { resetScale } from './scale.js';
+import { showModal } from './messages.js';
 
 const HASHTAGS_COUNT = 5;
 const HASHTAG_LENGTH = 20;
@@ -13,7 +23,7 @@ const HASHTAG_LENGTH = 20;
 const openForm = () => {
   uploadOverlay.classList.remove('hidden');
   effectLevel.classList.add('hidden');
-  document.querySelector('body').classList.add('modal-open');
+  body.classList.add('modal-open');
   formCancelButton.addEventListener('click', onButtonCancelClick);
   document.addEventListener('keydown', onDocumentKeydown);
   sliderElement.noUiSlider.reset();
@@ -33,9 +43,9 @@ const pristine = new Pristine(form, {
   errorTextParent: 'img-upload__field-wrapper'
 });
 
-const cancelForm = () => {
+const closeForm = () => {
   uploadOverlay.classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
+  body.classList.remove('modal-open');
   form.reset();
   pristine.reset();
   preview.style.filter = 'none';
@@ -44,13 +54,13 @@ const cancelForm = () => {
 };
 
 function onButtonCancelClick() {
-  cancelForm();
+  closeForm();
 }
 
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt.key)) {
     if (textHashtags !== document.activeElement && textDescription !== document.activeElement) {
-      cancelForm();
+      closeForm();
     }
   }
 }
@@ -59,9 +69,10 @@ form.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
-    await sendData();
-    cancelForm();
-    showSuccessMessage();
+    const formData = new FormData(evt.target);
+    await sendData(formData, () => showModal('#error', '.error__button'));
+    closeForm();
+    showModal('#success', '.success__button');
   }
 });
 
