@@ -109,7 +109,7 @@ function onBigPictureButtonCancelClick(evt) {
 }
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt.key)) {
+  if (isEscapeKey(evt)) {
     closeFullsizePhoto();
   }
 }

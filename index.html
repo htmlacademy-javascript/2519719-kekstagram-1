@@ -228,7 +228,7 @@
 
   <!-- Сообщение с ошибкой загрузки изображения -->
   <template id="error">
-    <section class="error">
+    <section class="error modal">
       <div class="error__inner">
         <h2 class="error__title">Ошибка загрузки файла</h2>
         <button type="button" class="error__button">Попробовать ещё раз</button>
@@ -238,7 +238,7 @@
 
   <!-- Сообщение об успешной загрузке изображения -->
   <template id="success">
-    <section class="success">
+    <section class="success modal">
       <div class="success__inner">
         <h2 class="success__title">Изображение успешно загружено</h2>
         <button type="button" class="success__button">Круто!</button>
@@ -249,15 +249,6 @@
   <!-- Экран загрузки изображения -->
   <template id="messages">
     <div class="img-upload__message  img-upload__message--loading">Загружаем...</div>
-  </template>
-
-  <template id="global-error">
-    <section class="global-error">
-      <div class="error__inner">
-        <h2 class="error__title">Ошибка загрузки</h2>
-        <button type="button" class="error__button">Закрыть</button>
-      </div>
-    </section>
   </template>
 
   <script src="vendor/pristine/pristine.min.js" type="text/javascript"></script>

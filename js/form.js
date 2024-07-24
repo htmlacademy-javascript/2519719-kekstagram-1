@@ -8,14 +8,14 @@ import {
   preview,
   effectLevel,
   sliderElement,
-  body
+  submitButton
 } from './elements.js';
 import { isEscapeKey } from './util.js';
 
-import { sendData } from './server-data.js';
+import { sendData } from './api.js';
 
 import { resetScale } from './scale.js';
-import { showModal } from './messages.js';
+import { showModal, ModalType } from './modal.js';
 
 const HASHTAGS_COUNT = 5;
 const HASHTAG_LENGTH = 20;
@@ -23,7 +23,7 @@ const HASHTAG_LENGTH = 20;
 const openForm = () => {
   uploadOverlay.classList.remove('hidden');
   effectLevel.classList.add('hidden');
-  body.classList.add('modal-open');
+  document.querySelector('body').classList.add('modal-open');
   formCancelButton.addEventListener('click', onButtonCancelClick);
   document.addEventListener('keydown', onDocumentKeydown);
   sliderElement.noUiSlider.reset();
@@ -45,7 +45,7 @@ const pristine = new Pristine(form, {
 
 const closeForm = () => {
   uploadOverlay.classList.add('hidden');
-  body.classList.remove('modal-open');
+  document.querySelector('body').classList.remove('modal-open');
   form.reset();
   pristine.reset();
   preview.style.filter = 'none';
@@ -58,25 +58,41 @@ function onButtonCancelClick() {
 }
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt.key)) {
+  if (isEscapeKey(evt)) {
     if (textHashtags !== document.activeElement && textDescription !== document.activeElement) {
       closeForm();
     }
   }
 }
 
-form.addEventListener('submit', async (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    const formData = new FormData(evt.target);
-    await sendData(formData, () => showModal('#error', '.error__button'));
-    closeForm();
-    showModal('#success', '.success__button');
-  }
-});
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
 
 
+const setFormSubmit = () => {
+  form.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      const formData = new FormData(evt.target);
+      sendData(formData)
+        .then(() => {
+          closeForm();
+          showModal(ModalType.SUCCESS);
+        })
+        .catch(() => {
+          showModal(ModalType.ERROR);
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
+};
 const convertToHashtag = (value) => {
   const trimmedValue = value.trim().toLowerCase();
   const hashtags = trimmedValue.split(' ');
@@ -113,3 +129,5 @@ pristine.addValidator(textHashtags, validateHashtagCount, 'Максимальн�
 pristine.addValidator(textHashtags, validateHashtagLength, 'Максимальная длина одного хэш-тега 20 символов, включая решётку');
 pristine.addValidator(textHashtags, validateHashtagUnique, 'Один и тот же хэш-тег не может быть использован дважды');
 pristine.addValidator(textHashtags, validateHashtagSymbol, 'строка после решётки должна состоять из букв и чисел');
+
+export { setFormSubmit };
