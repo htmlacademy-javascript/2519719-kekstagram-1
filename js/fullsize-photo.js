@@ -12,6 +12,7 @@ import {
   shownCommentCount
 } from './elements.js';
 
+import { isEscapeKey } from './util.js';
 
 const COMMENTS_PER_PAGE = 5;
 
@@ -108,7 +109,7 @@ function onBigPictureButtonCancelClick(evt) {
 }
 
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     closeFullsizePhoto();
   }
 }

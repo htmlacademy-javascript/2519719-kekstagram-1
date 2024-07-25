@@ -21,17 +21,19 @@ const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 const form = document.querySelector('.img-upload__form');
 const uploadInput = document.querySelector('#upload-file');
-const preview = document.querySelector('.img-upload__preview');
+const preview = document.querySelector('.img-upload__preview img');
 const effectLevel = document.querySelector('.img-upload__effect-level');
 const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');
 const radioButtons = document.querySelectorAll('.effects__radio');
 const buttonControlSmaller = document.querySelector('.scale__control--smaller');
 const buttonControlBigger = document.querySelector('.scale__control--bigger');
+const body = document.querySelector('body');
+const submitButton = document.querySelector('.img-upload__submit');
 
 export {
   bigPicture, bigPictureButtonCancel, bigPictureImg, bigPictureLikes, bigPictureComments, bigPictureDescription, bigPictureListComments,
   bigPictureSocialComment, miniatureTemplate, miniaturePictures, bigPictureShowMoreComments, bigPictureCountComment, shownCommentCount,
   uploadOverlay, formCancelButton, scaleControl, uploadFile, effectLevelValue, effectsRadio, textDescription, textHashtags, form, uploadInput, preview,
-  effectLevel, sliderElement, valueElement, radioButtons, buttonControlSmaller, buttonControlBigger
+  effectLevel, sliderElement, valueElement, radioButtons, buttonControlSmaller, buttonControlBigger, body, submitButton
 };

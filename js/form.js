@@ -1,9 +1,21 @@
 import {
-  uploadOverlay, formCancelButton, textDescription, textHashtags, form, uploadInput, preview, effectLevel,
-  sliderElement
+  uploadOverlay,
+  formCancelButton,
+  textDescription,
+  textHashtags,
+  form,
+  uploadInput,
+  preview,
+  effectLevel,
+  sliderElement,
+  submitButton
 } from './elements.js';
+import { isEscapeKey } from './util.js';
 
-import { Scale } from './scale.js';
+import { sendData } from './api.js';
+
+import { resetScale } from './scale.js';
+import { showModal, ModalType } from './modal.js';
 
 const HASHTAGS_COUNT = 5;
 const HASHTAG_LENGTH = 20;
@@ -31,37 +43,56 @@ const pristine = new Pristine(form, {
   errorTextParent: 'img-upload__field-wrapper'
 });
 
-const cancelForm = () => {
+const closeForm = () => {
   uploadOverlay.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   form.reset();
   pristine.reset();
   preview.style.filter = 'none';
-  preview.style.transform = `scale(${Scale.DEFAULT / 100})`;
+  resetScale();
   removeEventListeners();
 };
 
 function onButtonCancelClick() {
-  cancelForm();
+  closeForm();
 }
 
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     if (textHashtags !== document.activeElement && textDescription !== document.activeElement) {
-      cancelForm();
+      closeForm();
     }
   }
 }
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
 
-form.addEventListener('submit', (evt) => {
-  const isValid = pristine.validate();
-  if (!isValid) {
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+
+const setFormSubmit = () => {
+  form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-  }
-});
-
-
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      const formData = new FormData(evt.target);
+      sendData(formData)
+        .then(() => {
+          closeForm();
+          showModal(ModalType.SUCCESS);
+        })
+        .catch(() => {
+          showModal(ModalType.ERROR);
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
+};
 const convertToHashtag = (value) => {
   const trimmedValue = value.trim().toLowerCase();
   const hashtags = trimmedValue.split(' ');
@@ -98,3 +129,5 @@ pristine.addValidator(textHashtags, validateHashtagCount, 'Максимальн�
 pristine.addValidator(textHashtags, validateHashtagLength, 'Максимальная длина одного хэш-тега 20 символов, включая решётку');
 pristine.addValidator(textHashtags, validateHashtagUnique, 'Один и тот же хэш-тег не может быть использован дважды');
 pristine.addValidator(textHashtags, validateHashtagSymbol, 'строка после решётки должна состоять из букв и чисел');
+
+export { setFormSubmit };
