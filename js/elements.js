@@ -30,10 +30,14 @@ const buttonControlSmaller = document.querySelector('.scale__control--smaller');
 const buttonControlBigger = document.querySelector('.scale__control--bigger');
 const body = document.querySelector('body');
 const submitButton = document.querySelector('.img-upload__submit');
+const buttonFilterRandom = document.querySelector('#filter-random');
+const buttonFilterDiscussed = document.querySelector('#filter-discussed');
+const buttonFilterDefault = document.querySelector('#filter-default');
 
 export {
   bigPicture, bigPictureButtonCancel, bigPictureImg, bigPictureLikes, bigPictureComments, bigPictureDescription, bigPictureListComments,
   bigPictureSocialComment, miniatureTemplate, miniaturePictures, bigPictureShowMoreComments, bigPictureCountComment, shownCommentCount,
-  uploadOverlay, formCancelButton, scaleControl, uploadFile, effectLevelValue, effectsRadio, textDescription, textHashtags, form, uploadInput, preview,
-  effectLevel, sliderElement, valueElement, radioButtons, buttonControlSmaller, buttonControlBigger, body, submitButton
+  uploadOverlay, formCancelButton, scaleControl, uploadFile, effectLevelValue, effectsRadio, textDescription, textHashtags, form, uploadInput,
+  preview, effectLevel, sliderElement, valueElement, radioButtons, buttonControlSmaller, buttonControlBigger, body, submitButton, buttonFilterRandom,
+  buttonFilterDiscussed, buttonFilterDefault
 };
