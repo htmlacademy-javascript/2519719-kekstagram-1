@@ -1,15 +1,14 @@
-import { renderMiniature } from './miniature.js';
+import { renderMiniature, deleteMiniatures } from './miniature.js';
 import { buttonFilterRandom, buttonFilterDiscussed, buttonFilterDefault } from './elements.js';
 import { debounce } from './util.js';
 
 const RANDOM_PHOTO_COUNT = 10;
 
-const debounceRenderMiniature = debounce((photos) => renderMiniature(photos));
+const debounceRenderMiniature = debounce((photos) => {
+  deleteMiniatures();
+  renderMiniature(photos);
+});
 
-const deleteMiniatures = () => {
-  const miniatures = document.querySelectorAll('.picture');
-  miniatures.forEach((miniature) => miniature.remove());
-};
 
 const getRandomPhotos = (photos) => {
 
@@ -60,4 +59,14 @@ const addEventListenerOnDefaultFilterClick = (photos) => {
   });
 };
 
-export { addEventListenerOnRandomFilterClick, addEventListenerOnDiscussedFilterClick, addEventListenerOnDefaultFilterClick };
+
+const initFilters = (photos) => {
+
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+
+  addEventListenerOnRandomFilterClick(photos);
+  addEventListenerOnDiscussedFilterClick(photos);
+  addEventListenerOnDefaultFilterClick(photos);
+
+};
+export { initFilters };

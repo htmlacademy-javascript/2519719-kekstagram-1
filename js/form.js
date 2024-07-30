@@ -102,7 +102,7 @@ const convertToHashtag = (value) => {
 
 const validateHashtagCount = (value) => {
   const hashtags = convertToHashtag(value);
-  return hashtags.length < HASHTAGS_COUNT;
+  return hashtags.length <= HASHTAGS_COUNT;
 };
 
 const validateHashtagUnique = (value) => {
