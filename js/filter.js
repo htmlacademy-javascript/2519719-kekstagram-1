@@ -60,4 +60,14 @@ const addEventListenerOnDefaultFilterClick = (photos) => {
   });
 };
 
-export { addEventListenerOnRandomFilterClick, addEventListenerOnDiscussedFilterClick, addEventListenerOnDefaultFilterClick };
+
+const initFilters = (photos) => {
+
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+
+  addEventListenerOnRandomFilterClick(photos);
+  addEventListenerOnDiscussedFilterClick(photos);
+  addEventListenerOnDefaultFilterClick(photos);
+
+};
+export { initFilters };
