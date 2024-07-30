@@ -115,7 +115,6 @@ document.querySelector('.effects__list').addEventListener('change', () => {
   } else {
     effectLevel.classList.remove('hidden');
   }
-  preview.className = 'img-upload__preview';
   const effectClass = effectToFilterName[selectedValue];
   preview.classList.add(effectClass);
   setInitialSliderState(selectedValue);

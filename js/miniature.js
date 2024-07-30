@@ -3,20 +3,24 @@ import { miniaturePictures, miniatureTemplate } from './elements.js';
 const renderMiniature = (photos) => {
   const fragment = document.createDocumentFragment();
   photos.forEach((photo) => {
-    const puctire = miniatureTemplate.cloneNode(true);
-    const img = puctire.querySelector('.picture__img');
-    const bigPictureComments = puctire.querySelector('.picture__comments');
-    const likes = puctire.querySelector('.picture__likes');
-    puctire.id = photo.id;
+    const picture = miniatureTemplate.cloneNode(true);
+    const img = picture.querySelector('.picture__img');
+    const bigPictureComments = picture.querySelector('.picture__comments');
+    const likes = picture.querySelector('.picture__likes');
+    picture.id = photo.id;
     img.src = photo.url;
     img.alt = photo.description;
     likes.textContent = photo.likes;
     bigPictureComments.textContent = photo.comments.length;
-    fragment.appendChild(puctire);
+    fragment.appendChild(picture);
 
   });
   miniaturePictures.appendChild(fragment);
 };
 
+const deleteMiniatures = () => {
+  const miniatures = document.querySelectorAll('.picture');
+  miniatures.forEach((miniature) => miniature.remove());
+};
 
-export { renderMiniature };
+export { renderMiniature, deleteMiniatures };
