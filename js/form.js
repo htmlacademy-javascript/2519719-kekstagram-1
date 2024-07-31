@@ -54,7 +54,7 @@ function onButtonCancelClick() {
 
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt)) {
-    if (textHashtags !== document.activeElement && textDescription !== document.activeElement) {
+    if (textHashtags !== document.activeElement && textDescription !== document.activeElement && !document.querySelector('.error')) {
       closeForm();
     }
   }
@@ -70,7 +70,7 @@ const unblockSubmitButton = () => {
 
 
 const setFormSubmit = () => {
-  form.addEventListener('submit', async (evt) => {
+  form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
