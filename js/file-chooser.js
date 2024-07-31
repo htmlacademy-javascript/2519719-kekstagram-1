@@ -1,5 +1,5 @@
 import { openForm } from './form.js';
-import { uploadInput, preview } from './elements.js'
+import { uploadInput, preview } from './elements.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
