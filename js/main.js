@@ -1,16 +1,12 @@
 import { renderMiniature } from './miniature.js';
 import { addPicturesEventListener } from './fullsize-photo.js';
 import { getPhotos } from './api.js';
-import { showAlert } from './modal.js';
+import { showAlert } from './util.js';
 import { setFormSubmit } from './form.js';
 import { initFilters } from './filter.js';
-import './form.js';
-import './filter.js';
 import './scale.js';
 import './effects.js';
-import './modal.js';
-import './api.js';
-import './avatar.js';
+import './file-chooser.js';
 
 try {
   const photos = await getPhotos();

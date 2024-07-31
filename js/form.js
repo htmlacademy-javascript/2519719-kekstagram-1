@@ -4,7 +4,6 @@ import {
   textDescription,
   textHashtags,
   form,
-  uploadInput,
   preview,
   effectLevel,
   sliderElement,
@@ -28,10 +27,6 @@ const openForm = () => {
   document.addEventListener('keydown', onDocumentKeydown);
   sliderElement.noUiSlider.reset();
 };
-
-uploadInput.addEventListener('change', () => {
-  openForm();
-});
 
 const removeEventListeners = () => {
   formCancelButton.removeEventListener('click', onButtonCancelClick);
@@ -130,4 +125,4 @@ pristine.addValidator(textHashtags, validateHashtagLength, 'Максимальн
 pristine.addValidator(textHashtags, validateHashtagUnique, 'Один и тот же хэш-тег не может быть использован дважды');
 pristine.addValidator(textHashtags, validateHashtagSymbol, 'строка после решётки должна состоять из букв и чисел');
 
-export { setFormSubmit };
+export { setFormSubmit, openForm };

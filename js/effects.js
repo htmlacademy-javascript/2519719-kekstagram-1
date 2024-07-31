@@ -2,7 +2,7 @@ import {
   preview, effectLevel, sliderElement, valueElement
 } from './elements.js';
 
-const effect = {
+const Effect = {
   NONE: 'none',
   CHROME: 'chrome',
   SEPIA: 'sepia',
@@ -11,17 +11,8 @@ const effect = {
   HEAT: 'heat',
 };
 
-const effectToFilterName = {
-  [effect.NONE]: 'none',
-  [effect.CHROME]: 'grayscale',
-  [effect.SEPIA]: 'sepia',
-  [effect.MARVIN]: 'invert',
-  [effect.PHOBOS]: 'blur',
-  [effect.HEAT]: 'brightness',
-};
-
 const EFFECT_CONFIG = {
-  [effect.NONE]: {
+  [Effect.NONE]: {
     range: {
       min: 0,
       max: 100,
@@ -30,7 +21,7 @@ const EFFECT_CONFIG = {
     step: 1,
     measure: ''
   },
-  [effect.CHROME]: {
+  [Effect.CHROME]: {
     range: {
       min: 0,
       max: 1,
@@ -39,7 +30,7 @@ const EFFECT_CONFIG = {
     step: 0.1,
     measure: ''
   },
-  [effect.SEPIA]: {
+  [Effect.SEPIA]: {
     range: {
       min: 0,
       max: 1,
@@ -48,7 +39,7 @@ const EFFECT_CONFIG = {
     step: 0.1,
     measure: ''
   },
-  [effect.MARVIN]: {
+  [Effect.MARVIN]: {
     range: {
       min: 0,
       max: 100,
@@ -57,7 +48,7 @@ const EFFECT_CONFIG = {
     step: 1,
     measure: '%'
   },
-  [effect.PHOBOS]: {
+  [Effect.PHOBOS]: {
     range: {
       min: 0,
       max: 3,
@@ -66,7 +57,7 @@ const EFFECT_CONFIG = {
     step: 0.1,
     measure: 'px'
   },
-  [effect.HEAT]: {
+  [Effect.HEAT]: {
     range: {
       min: 1,
       max: 3,
@@ -77,19 +68,30 @@ const EFFECT_CONFIG = {
   },
 };
 
+const effectToFilterName = {
+  [Effect.NONE]: 'none',
+  [Effect.CHROME]: 'grayscale',
+  [Effect.SEPIA]: 'sepia',
+  [Effect.MARVIN]: 'invert',
+  [Effect.PHOBOS]: 'blur',
+  [Effect.HEAT]: 'brightness',
+};
+
+let currentFilter = '';
+
 noUiSlider.create(sliderElement, {
   range: {
-    min: EFFECT_CONFIG[effect.NONE].range.min,
-    max: EFFECT_CONFIG[effect.NONE].range.max,
+    min: EFFECT_CONFIG[Effect.NONE].range.min,
+    max: EFFECT_CONFIG[Effect.NONE].range.max,
   },
-  start: EFFECT_CONFIG[effect.NONE].start,
+  start: EFFECT_CONFIG[Effect.NONE].start,
   connect: 'lower',
-  step: EFFECT_CONFIG[effect.NONE].step,
+  step: EFFECT_CONFIG[Effect.NONE].step,
 
 });
 
 
-function setInitialSliderState(value) {
+const setInitialSliderState = (value) => {
   const config = EFFECT_CONFIG[value];
   sliderElement.noUiSlider.updateOptions({
     range: {
@@ -99,12 +101,13 @@ function setInitialSliderState(value) {
     start: config.start,
     step: config.step,
   });
-}
+};
 
 const applyFilter = () => {
   valueElement.value = sliderElement.noUiSlider.get();
   const selectedValue = document.querySelector('.effects__radio:checked').value;
   preview.style.filter = `${effectToFilterName[selectedValue]}(${valueElement.value}${EFFECT_CONFIG[selectedValue].measure})`;
+  currentFilter = selectedValue;
 };
 
 document.querySelector('.effects__list').addEventListener('change', () => {
@@ -115,8 +118,8 @@ document.querySelector('.effects__list').addEventListener('change', () => {
   } else {
     effectLevel.classList.remove('hidden');
   }
-  const effectClass = effectToFilterName[selectedValue];
-  preview.classList.add(effectClass);
+  preview.classList.remove(`effects__preview--${currentFilter}`);
+  preview.classList.add(`effects__preview--${selectedValue}`);
   setInitialSliderState(selectedValue);
 
   applyFilter();
