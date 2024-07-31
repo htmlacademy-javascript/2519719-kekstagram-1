@@ -27,7 +27,6 @@ const addEventListenerOnRandomFilterClick = (photos) => {
     buttonFilterDefault.classList.remove('img-filters__button--active');
     buttonFilterDiscussed.classList.remove('img-filters__button--active');
     buttonFilterRandom.classList.add('img-filters__button--active');
-    deleteMiniatures();
     const randomPhotosRender = getRandomPhotos(photos);
     debounceRenderMiniature(randomPhotosRender);
   });
@@ -43,7 +42,6 @@ const addEventListenerOnDiscussedFilterClick = (photos) => {
     buttonFilterRandom.classList.remove('img-filters__button--active');
     buttonFilterDefault.classList.remove('img-filters__button--active');
     buttonFilterDiscussed.classList.add('img-filters__button--active');
-    deleteMiniatures();
     const discussedPhotoRender = getDiscussedPhotos(photos);
     debounceRenderMiniature(discussedPhotoRender);
   });
@@ -54,7 +52,6 @@ const addEventListenerOnDefaultFilterClick = (photos) => {
     buttonFilterRandom.classList.remove('img-filters__button--active');
     buttonFilterDiscussed.classList.remove('img-filters__button--active');
     buttonFilterDefault.classList.add('img-filters__button--active');
-    deleteMiniatures();
     debounceRenderMiniature(photos);
   });
 };

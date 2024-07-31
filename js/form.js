@@ -4,7 +4,6 @@ import {
   textDescription,
   textHashtags,
   form,
-  uploadInput,
   preview,
   effectLevel,
   sliderElement,
@@ -28,10 +27,6 @@ const openForm = () => {
   document.addEventListener('keydown', onDocumentKeydown);
   sliderElement.noUiSlider.reset();
 };
-
-uploadInput.addEventListener('change', () => {
-  openForm();
-});
 
 const removeEventListeners = () => {
   formCancelButton.removeEventListener('click', onButtonCancelClick);
@@ -59,7 +54,7 @@ function onButtonCancelClick() {
 
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt)) {
-    if (textHashtags !== document.activeElement && textDescription !== document.activeElement) {
+    if (textHashtags !== document.activeElement && textDescription !== document.activeElement && !document.querySelector('.error')) {
       closeForm();
     }
   }
@@ -75,7 +70,7 @@ const unblockSubmitButton = () => {
 
 
 const setFormSubmit = () => {
-  form.addEventListener('submit', async (evt) => {
+  form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
@@ -130,4 +125,4 @@ pristine.addValidator(textHashtags, validateHashtagLength, 'Максимальн
 pristine.addValidator(textHashtags, validateHashtagUnique, 'Один и тот же хэш-тег не может быть использован дважды');
 pristine.addValidator(textHashtags, validateHashtagSymbol, 'строка после решётки должна состоять из букв и чисел');
 
-export { setFormSubmit };
+export { setFormSubmit, openForm };
