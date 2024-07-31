@@ -1,8 +1,9 @@
 const ALERT_SHOW_TIME = 2000;
+const TIMEOUT_DELAY = 500
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-function debounce(callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
   let timeoutId;
   return (...rest) => {
 
